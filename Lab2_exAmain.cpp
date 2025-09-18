@@ -9,18 +9,14 @@ using namespace std;
 
 DictionaryList dictionary_tests();
 
-void test_copying();
-
 void print(DictionaryList& dl);
-
-void test_finding(DictionaryList& dl);
 
 void test_operator_overloading(DictionaryList& dl);
 
 int main()
 {
   DictionaryList dl = dictionary_tests();
-#if 0
+#if 1
  test_operator_overloading(dl);
 #endif
   return 0;
@@ -65,48 +61,6 @@ DictionaryList dictionary_tests()
   return dl;
 }
 
-void test_copying()
-{
-   DictionaryList one;
-
-  // Copy an empty list.
-  DictionaryList two;
-  assert(two.size() == 0);
-
-  // Copy a list with three entries and a valid cursor.
-  one.insert(319,"Randomness");
-  one.insert(315,"Shocks");
-  one.insert(335,"ParseErrors");
-  one.go_to_first();
-  one.step_fwd();
-    
-  DictionaryList three(one);
-    
-  assert(three.cursor_datum() == "Randomness");
-  one.remove(335);
-
-  cout << "Printing list--keys should be 315, 319\n";
-  print(one);
-  
-  cout << "Printing list--keys should be 315, 319, 335\n";
-  print(three);
-
-  // Assignment operator check.
-  one = two = three = three;
-  one.remove(319);
-  two.remove(315);
-  
-  cout << "Printing list--keys should be 315, 335\n";
-  print(one);
-
-  cout << "Printing list--keys should be 319, 335\n";
-  print(two);
-  
-  cout << "Printing list--keys should be 315, 319, 335\n";
-  print(three);
-
-  cout << "***----Finished tests of copying----------------------***\n\n";
-}
 
 void print(DictionaryList& dl)
 {
@@ -118,39 +72,8 @@ void print(DictionaryList& dl)
   }
 }
 
-void test_finding(DictionaryList& dl)
-{
-    
-     // Pretend that a user is trying to look up names.
-     cout << "\nLet's look up some names ...\n";
-    
-     dl.find(8001);
-     if (dl.cursor_ok())
-        cout << "  name for 8001 is: " << dl.cursor_datum().c_str() << ".\n";
-     else
-        cout << "  Sorry, I couldn't find 8001 in the list. \n" ;
-    
-     dl.find(8000);
-     if (dl.cursor_ok())
-        cout << "  name for 8000 is: " << dl.cursor_datum().c_str() << ".\n";
-     else
-        cout << "  Sorry, I couldn't find 8000 in the list. \n" ;
-    
-     dl.find(8002);
-     if (dl.cursor_ok())
-        cout << "  name for 8002 is: " << dl.cursor_datum().c_str() << ".\n";
-     else
-        cout << "  Sorry, I couldn't find 8002 in the list. \n" ;
-    
-     dl.find(8004);
-     if (dl.cursor_ok())
-        cout << "  name for 8004 is: " << dl.cursor_datum().c_str() << ".\n";
-     else
-        cout << "  Sorry, I couldn't find 8004 in the list. \n" ;
-    
-    cout << "***----Finished tests of finding -------------------------***\n\n";
-}
-#if 0
+
+#if 1
 void test_operator_overloading(DictionaryList& dl)
 {
 
