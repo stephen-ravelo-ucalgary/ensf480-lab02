@@ -14,7 +14,7 @@
 class Shape
 {
 protected:
-    Shape(Point origin, char &shapeName);
+    Shape(double x, double y, char &shapeName);
     ~Shape();
 
     const Point &getOrigin() const;

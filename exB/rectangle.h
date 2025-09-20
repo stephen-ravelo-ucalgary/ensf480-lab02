@@ -14,7 +14,7 @@
 class Rectangle : public Square
 {
 protected:
-    Rectangle(Point origin, char &shapeName, double side_a, double side_b);
+    Rectangle(double x, double y, double side_a, double side_b, char &shapeName);
 
     double get_side_b() const;
     void set_side_b(double side_b);

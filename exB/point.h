@@ -11,13 +11,13 @@
 
 class Point
 {
-private:
+public:
     Point(double x, double y);
 
     double getX() const;
-    void setX(double x);
+    void setX(const double x);
     double getY() const;
-    void setY(double y);
+    void setY(const double y);
     int getID() const;
 
     void display() const;

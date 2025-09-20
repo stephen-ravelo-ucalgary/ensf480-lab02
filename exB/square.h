@@ -14,7 +14,7 @@
 class Square : public Shape
 {
 protected:
-    Square(Point origin, char &shapeName, double side_a);
+    Square(double x, double y, double side_a, char &shapeName);
 
     double get_side_a() const;
     void set_side_a(double side_a);
