@@ -1,4 +1,10 @@
-// Lab 2 - Exercise A
+/*
+* File Name: dictionaryList.cpp
+* Assignment: Lab 1 Exercise A
+* Lab Section: B02
+* Completed by: Stephen Ravelo, Aaron Lauang
+* Submission Date: September 20, 2025
+*/
 
 #include <assert.h>
 #include <iostream>
@@ -43,6 +49,16 @@ DictionaryList &DictionaryList::operator=(const DictionaryList &rhs)
     copy(rhs);
   }
   return *this;
+}
+
+string& DictionaryList::operator [](const int index)
+{
+  Node* p = headM;
+  for (int i = 0; i < index; i++)
+  {
+    p = p->nextM;
+  }
+  return p->datumM;
 }
 
 DictionaryList::~DictionaryList()

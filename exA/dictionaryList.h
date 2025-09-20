@@ -1,5 +1,10 @@
-// dictionaryList.h
-// Lab 2 - Exercise A
+/*
+ * File Name: dictionaryList.h
+ * Assignment: Lab 1 Exercise A
+ * Lab Section: B02
+ * Completed by: Stephen Ravelo, Aaron Lauang
+ * Submission Date: September 20, 2025
+ */
 
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
@@ -19,7 +24,6 @@ using namespace std;
 //    attached to any key/datum pair.  If a DictionaryList is empty, the
 //    cursor is automatically in the "off-list" state.
 
-
 // Edit these typedefs to change the key or datum types, if necessary.
 typedef int Key;
 typedef string Datum;
@@ -32,94 +36,96 @@ typedef string Datum;
 
 class DictionaryList;
 
-ostream& operator <<(ostream& os, DictionaryList& rhs);
+ostream &operator<<(ostream &os, DictionaryList &rhs);
 
-class Node {
+class Node
+{
   friend class DictionaryList;
-  friend ostream& operator <<(ostream& os, DictionaryList& rhs);
-  private:
+  friend ostream &operator<<(ostream &os, DictionaryList &rhs);
+
+private:
   Key keyM;
   Datum datumM;
   Node *nextM;
-  
+
   // This ctor should be convenient in insert and copy operations.
-  Node(const Key& keyA, const Datum& datumA, Node *nextA);
+  Node(const Key &keyA, const Datum &datumA, Node *nextA);
 };
 
-class DictionaryList {
-  friend ostream& operator <<(ostream& os, DictionaryList& rhs);
-  public:
+class DictionaryList
+{
+  friend ostream &operator<<(ostream &os, DictionaryList &rhs);
+
+public:
   DictionaryList();
-  DictionaryList(const DictionaryList& source);
-  DictionaryList& operator =(const DictionaryList& rhs);
+  DictionaryList(const DictionaryList &source);
+  DictionaryList &operator=(const DictionaryList &rhs);
+  string &operator[](const int index);
   ~DictionaryList();
-  
-  
+
   int size() const;
   // PROMISES: Returns number of keys in the table.
-  
+
   int cursor_ok() const;
   // PROMISES:
   //   Returns 1 if the cursor is attached to a key/datum pair,
   //   and 0 if the cursor is in the off-list state.
-  
-  const Key& cursor_key() const;
+
+  const Key &cursor_key() const;
   // REQUIRES: cursor_ok()
   // PROMISES: Returns key of key/datum pair to which cursor is attached.
-  
-  Datum& cursor_datum() const;
+
+  Datum &cursor_datum() const;
   // REQUIRES: cursor_ok()
   // PROMISES: Returns datum of key/datum pair to which cursor is attached.
-  
-  void insert(const Key& keyA, const Datum& datumA);
+
+  void insert(const Key &keyA, const Datum &datumA);
   // PROMISES:
   //   If keyA matches a key in the table, the datum for that
   //   key is set equal to datumA.
   //   If keyA does not match an existing key, keyA and datumM are
   //   used to create a new key/datum pair in the table.
   //   In either case, the cursor goes to the off-list state.
-  
-  void remove(const Key& keyA);
+
+  void remove(const Key &keyA);
   // PROMISES:
   //   If keyA matches a key in the table, the corresponding
   //   key/datum pair is removed from the table.
   //   If keyA does not match an existing key, the table is unchanged.
   //   In either case, the cursor goes to the off-list state.
-  
-  void find(const Key& keyA);
+
+  void find(const Key &keyA);
   // PROMISES:
   //   If keyA matches a key in the table, the cursor is attached
   //   to the corresponding key/datum pair.
   //   If keyA does not match an existing key, the cursor is put in
   //   the off-list state.
-  
+
   void go_to_first();
   // PROMISES: If size() > 0, cursor is moved to the first key/datum pair
   //   in the table.
-  
+
   void step_fwd();
   // REQUIRES: cursor_ok()
   // PROMISES:
   //   If cursor is at the last key/datum pair in the list, cursor
   //   goes to the off-list state.
   //   Otherwise the cursor moves forward from one pair to the next.
-  
+
   void make_empty();
   // PROMISES: size() == 0.
-  
-  private:
+
+private:
   int sizeM;
   Node *headM;
   Node *cursorM;
-  
+
   void destroy();
   // Deallocate all nodes, set headM to zero.
-  
-  void copy(const DictionaryList& source);
+
+  void copy(const DictionaryList &source);
   // Establishes *this as a copy of source.  Cursor of *this will
   // point to the twin of whatever the source's cursor points to.
-  
 };
 
 #endif
-
