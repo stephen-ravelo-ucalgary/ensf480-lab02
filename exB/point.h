@@ -26,8 +26,8 @@ public:
     static double distance(Point &p1,Point &p2);
 
 private:
-    double x;
-    double y;
+    double xM;
+    double yM;
     const int ID;
     static int count;
 };

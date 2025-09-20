@@ -14,7 +14,7 @@
 class Shape
 {
 protected:
-    Shape(double x, double y, char &shapeName);
+    Shape(double x, double y, char *shapeName);
     ~Shape();
 
     const Point &getOrigin() const;
@@ -26,8 +26,8 @@ protected:
     void move(double dx, double dy);
 
 private:
-    Point origin;
-    char *shapeName;
+    Point originM;
+    char *shapeNameM;
 };
 
 #endif

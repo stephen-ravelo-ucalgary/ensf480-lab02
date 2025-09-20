@@ -24,7 +24,7 @@ protected:
     void display() const;
 
 private:
-    double side_b;
+    double side_bM;
 };
 
 #endif
