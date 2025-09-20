@@ -1,5 +1,5 @@
 /*
- * File Name: shape.h
+ * File Name: square.h
  * Assignment: Lab 1 Exercise B
  * Lab Section: B02
  * Completed by: Stephen Ravelo, Aaron Lauang
