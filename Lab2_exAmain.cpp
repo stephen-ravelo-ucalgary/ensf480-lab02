@@ -82,7 +82,7 @@ void test_operator_overloading(DictionaryList& dl)
     dl.step_fwd();
     dl2.go_to_first();
 
-    cout << "\nTestig a few comparison and insertion operators." << endl;
+    cout << "\nTesting a few comparison and insertion operators." << endl;
     
     // Needs to overload >= and << (insertion operator) in class Mystring
     if(dl.cursor_datum() >= (dl2.cursor_datum()))
@@ -134,33 +134,33 @@ void test_operator_overloading(DictionaryList& dl)
      */
     cout << dl2;
  
-    cout << endl << "\nUsing [] to display the datum only: \n";
-    /* The following line is expected to display the content of the linked list
-     * dl2 -- datum. It should display:
-     *   Allen
-     *   Peter
-     *   Sam
-     *   PointyHair
-     */
+    // cout << endl << "\nUsing [] to display the datum only: \n";
+    // /* The following line is expected to display the content of the linked list
+    //  * dl2 -- datum. It should display:
+    //  *   Allen
+    //  *   Peter
+    //  *   Sam
+    //  *   PointyHair
+    //  */
     
-    for(int i =0; i < dl2.size(); i++)
-        cout << dl2[i] << endl;
+    // for(int i =0; i < dl2.size(); i++)
+    //     cout << dl2[i] << endl;
     
-    cout << endl << "\nUsing [] to display sequence of charaters in a datum: \n";
-    /* The following line is expected to display the characters in the first node
-     * of the dictionary. It should display:
-     *   A
-     *   l
-     *   l
-     *   e
-     *   n
-     */
-    cout << dl2[0][0] << endl;
-    cout << dl2[0][1] << endl;
-    cout << dl2[0][2] << endl;
-    cout << dl2[0][3] << endl;
-    cout << dl2[0][4] << endl;
+    // cout << endl << "\nUsing [] to display sequence of charaters in a datum: \n";
+    // /* The following line is expected to display the characters in the first node
+    //  * of the dictionary. It should display:
+    //  *   A
+    //  *   l
+    //  *   l
+    //  *   e
+    //  *   n
+    //  */
+    // cout << dl2[0][0] << endl;
+    // cout << dl2[0][1] << endl;
+    // cout << dl2[0][2] << endl;
+    // cout << dl2[0][3] << endl;
+    // cout << dl2[0][4] << endl;
     
-    cout << "\n\n***----Finished tests for overloading operators ----------***\n\n";
+    // cout << "\n\n***----Finished tests for overloading operators ----------***\n\n";
 }
 #endif

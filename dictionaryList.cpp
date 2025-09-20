@@ -1,6 +1,5 @@
 // Lab 2 - Exercise A
 
-
 #include <assert.h>
 #include <iostream>
 #include <stdlib.h>
@@ -8,24 +7,38 @@
 
 using namespace std;
 
-Node::Node(const Key& keyA, const Datum& datumA, Node *nextA)
-  : keyM(keyA), datumM(datumA), nextM(nextA)
+ostream &operator<<(ostream &os, DictionaryList &rhs)
+{
+  string s = "";
+  Node* p = rhs.headM;
+  while (p != 0)
+  {
+    s += to_string(p->keyM) + " " + p->datumM + "\n";
+    p = p->nextM;
+  }
+
+  return cout << s;
+}
+
+Node::Node(const Key &keyA, const Datum &datumA, Node *nextA)
+    : keyM(keyA), datumM(datumA), nextM(nextA)
 {
 }
 
 DictionaryList::DictionaryList()
-  : sizeM(0), headM(0), cursorM(0)
+    : sizeM(0), headM(0), cursorM(0)
 {
 }
 
-DictionaryList::DictionaryList(const DictionaryList& source)
+DictionaryList::DictionaryList(const DictionaryList &source)
 {
   copy(source);
 }
 
-DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
+DictionaryList &DictionaryList::operator=(const DictionaryList &rhs)
 {
-  if (this != &rhs) {
+  if (this != &rhs)
+  {
     destroy();
     copy(rhs);
   }
@@ -47,179 +60,176 @@ int DictionaryList::cursor_ok() const
   return cursorM != 0;
 }
 
-const Key& DictionaryList::cursor_key() const
+const Key &DictionaryList::cursor_key() const
 {
   assert(cursor_ok());
   return cursorM->keyM;
 }
 
-Datum& DictionaryList::cursor_datum() const
+Datum &DictionaryList::cursor_datum() const
 {
   assert(cursor_ok());
   return cursorM->datumM;
 }
 
-void DictionaryList::insert(const int& keyA, const string& datumA)
+void DictionaryList::insert(const int &keyA, const string &datumA)
 {
   // Add new node at head?
-  if (headM == 0 || keyA < headM->keyM) {
+  if (headM == 0 || keyA < headM->keyM)
+  {
     headM = new Node(keyA, datumA, headM);
     sizeM++;
   }
-    
+
   // Overwrite datum at head?
   else if (keyA == headM->keyM)
     headM->datumM = datumA;
-    
+
   // Have to search ...
-  else {
-      
-    //POINT ONE
-        
+  else
+  {
+
+    // POINT ONE
+
     // if key is found in list, just overwrite data;
-    for (Node *p = headM; p !=0; p = p->nextM)
-        {
-            if(keyA == p->keyM)
-            {
-                p->datumM = datumA;
-                return;
-            }
-        }
-        
-    //OK, find place to insert new node ...
-    Node *p = headM ->nextM;
+    for (Node *p = headM; p != 0; p = p->nextM)
+    {
+      if (keyA == p->keyM)
+      {
+        p->datumM = datumA;
+        return;
+      }
+    }
+
+    // OK, find place to insert new node ...
+    Node *p = headM->nextM;
     Node *prev = headM;
-        
-    while(p !=0 && keyA >p->keyM)
-        {
-            prev = p;
-            p = p->nextM;
-        }
-        
+
+    while (p != 0 && keyA > p->keyM)
+    {
+      prev = p;
+      p = p->nextM;
+    }
+
     prev->nextM = new Node(keyA, datumA, p);
     sizeM++;
   }
   cursorM = NULL;
-    
 }
 
-void DictionaryList::remove(const int& keyA)
+void DictionaryList::remove(const int &keyA)
 {
-    if (headM == 0 || keyA < headM -> keyM)
-        return;
-    
-    Node *doomed_node = 0;
-    
-    if (keyA == headM-> keyM) {
-        doomed_node = headM;
-        headM = headM->nextM;
-        
-        // POINT TWO
+  if (headM == 0 || keyA < headM->keyM)
+    return;
+
+  Node *doomed_node = 0;
+
+  if (keyA == headM->keyM)
+  {
+    doomed_node = headM;
+    headM = headM->nextM;
+
+    // POINT TWO
+  }
+  else
+  {
+    Node *before = headM;
+    Node *maybe_doomed = headM->nextM;
+    while (maybe_doomed != 0 && keyA > maybe_doomed->keyM)
+    {
+      before = maybe_doomed;
+      maybe_doomed = maybe_doomed->nextM;
     }
-    else {
-        Node *before = headM;
-        Node *maybe_doomed = headM->nextM;
-        while(maybe_doomed != 0 && keyA > maybe_doomed-> keyM) {
-            before = maybe_doomed;
-            maybe_doomed = maybe_doomed->nextM;
-        }
-        
-        if (maybe_doomed != 0 && maybe_doomed->keyM == keyA) {
-            doomed_node = maybe_doomed;
-            before->nextM = maybe_doomed->nextM;
-        }
-        
-        
+
+    if (maybe_doomed != 0 && maybe_doomed->keyM == keyA)
+    {
+      doomed_node = maybe_doomed;
+      before->nextM = maybe_doomed->nextM;
     }
-    if(doomed_node == cursorM)
-        cursorM = 0;
-    
-    delete doomed_node;           // Does nothing if doomed_node == 0.
-    sizeM--;
+  }
+  if (doomed_node == cursorM)
+    cursorM = 0;
+
+  delete doomed_node; // Does nothing if doomed_node == 0.
+  sizeM--;
 }
 
 void DictionaryList::go_to_first()
 {
-    cursorM = headM;
+  cursorM = headM;
 }
 
 void DictionaryList::step_fwd()
 {
-    assert(cursor_ok());
-    cursorM = cursorM->nextM;
+  assert(cursor_ok());
+  cursorM = cursorM->nextM;
 }
 
 void DictionaryList::make_empty()
 {
-    destroy();
-    sizeM = 0;
-    cursorM = 0;
+  destroy();
+  sizeM = 0;
+  cursorM = 0;
 }
 
-
-void DictionaryList::find(const Key& keyA)
+void DictionaryList::find(const Key &keyA)
 {
-    for (Node *p = headM; p != 0; p=p->nextM)
-        if (keyA == p->keyM)
-        {
-            cout << "'" << keyA <<"' was found with datum value " << p->datumM.c_str() << ".\n";
-            cursorM = p;
-            return;
-        }
-    cout << "'" << keyA <<"' was not found.\n";
-    cursorM = 0;
+  for (Node *p = headM; p != 0; p = p->nextM)
+    if (keyA == p->keyM)
+    {
+      cout << "'" << keyA << "' was found with datum value " << p->datumM.c_str() << ".\n";
+      cursorM = p;
+      return;
+    }
+  cout << "'" << keyA << "' was not found.\n";
+  cursorM = 0;
 }
-
 
 void DictionaryList::destroy()
 {
-    
-        Node *p = headM;
-        Node *prev;
-        while (p != 0)
-        {
-            prev = p;
-            p = p->nextM;
-            delete prev;
-        }
-        headM = 0;
-        sizeM = 0;
-    
+
+  Node *p = headM;
+  Node *prev;
+  while (p != 0)
+  {
+    prev = p;
+    p = p->nextM;
+    delete prev;
+  }
+  headM = 0;
+  sizeM = 0;
 }
 
-
-void DictionaryList::copy(const DictionaryList& source)
+void DictionaryList::copy(const DictionaryList &source)
 {
-    if (source.headM == 0) {
-        headM = 0;
-        return;
-    }
-    
-    headM = new Node (source.headM->keyM, source.headM->datumM, NULL);
-    Node *newest_node = headM;
-    
-    const Node *source_node = source.headM;
-    
-    if(source_node == source.cursorM)
-         cursorM = newest_node;
-    
-    while (true) {
-        source_node = source_node->nextM;
-        
-        if (source_node == 0)
-            break;
-        
-        newest_node->nextM = new Node(source_node->keyM, source_node->datumM, NULL);
-        
-       if(source_node == source.cursorM)
-            cursorM = newest_node->nextM;
+  if (source.headM == 0)
+  {
+    headM = 0;
+    return;
+  }
 
-        newest_node = newest_node->nextM;
-        
-    }
-    
-    sizeM = source.sizeM;
+  headM = new Node(source.headM->keyM, source.headM->datumM, NULL);
+  Node *newest_node = headM;
 
+  const Node *source_node = source.headM;
+
+  if (source_node == source.cursorM)
+    cursorM = newest_node;
+
+  while (true)
+  {
+    source_node = source_node->nextM;
+
+    if (source_node == 0)
+      break;
+
+    newest_node->nextM = new Node(source_node->keyM, source_node->datumM, NULL);
+
+    if (source_node == source.cursorM)
+      cursorM = newest_node->nextM;
+
+    newest_node = newest_node->nextM;
+  }
+
+  sizeM = source.sizeM;
 }
-
-
