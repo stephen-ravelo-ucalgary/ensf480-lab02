@@ -13,16 +13,18 @@
 
 class Shape
 {
-protected:
-    Shape(double x, double y, char *shapeName);
+public:
+    Shape(double x, double y, const char *shapeName);
+    Shape(const Shape &source);
+    Shape &operator=(const Shape &rhs);
     ~Shape();
-
+    
     const Point &getOrigin() const;
-    char *getName();
+    char *getName() const;
 
-    void display() const;
-    double distance(Point &other);
-    static double distance(Point &p1, Point &p2);
+    virtual void display() const;
+    double distance(Shape &other);
+    static double distance(Shape &s1, Shape &s2);
     void move(double dx, double dy);
 
 private:

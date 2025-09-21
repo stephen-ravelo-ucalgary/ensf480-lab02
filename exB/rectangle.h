@@ -13,15 +13,17 @@
 
 class Rectangle : public Square
 {
-protected:
-    Rectangle(double x, double y, double side_a, double side_b, char &shapeName);
+public:
+    Rectangle(double x, double y, double side_a, double side_b, const char *shapeName);\
+    Rectangle(const Rectangle &source);
+    Rectangle &operator=(const Rectangle &rhs);
 
     double get_side_b() const;
-    void set_side_b(double side_b);
+    void set_side_b(const double side_b);
 
+    void display() const;
     double area() const;
     double perimeter() const;
-    void display() const;
 
 private:
     double side_bM;
